@@ -19,24 +19,18 @@ class App extends React.Component {
   }
 
   handleChange = e => {
-    console.log('button was clicked');
-    e.preventDefault();
+    //e.preventDefault();
     this.setState({
       searchQuery: e.target.value,
     });
-
-
   }
 
   getCityInfo = async (e) => {
     e.preventDefault();
-    try {let url = `https://us1.locationiq.com/v1/search.php?key=pk.a0564b3cd5bfb3e88f0a9cc3ccabd717&q=${this.state.searchQuery}&format=json`;
-
-    //console.log(url);
+    try {let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_ACCESS_TOKEN}&q=${this.state.searchQuery}&format=json`;
 
     let cityResults = await axios.get(url);
 
-    //console.log(cityResults.data[0].lat)
     this.setState({
       cityData: cityResults.data[0],
       showCityInfo: true
@@ -52,7 +46,6 @@ class App extends React.Component {
 
 
   render() {
-    console.log(`https://maps.locationiq.com/v3/staticmap?key=pk.a0564b3cd5bfb3e88f0a9cc3ccabd717&center=${this.state.cityData.lat},${this.state.cityData.lat}&zoom=16`);
 
     return (
       <>
@@ -71,21 +64,23 @@ class App extends React.Component {
           </form>
 
           {this.state.showCityInfo && <article>
-            <p>{this.state.cityData.display_name}</p>
-            <p>{this.state.cityData.lat}</p>
-            <p>{this.state.cityData.lon}</p>
+            
             {this.state.renderError && <p>{this.state.errorMessage}</p>}
             
             <Card border="dark" style={{width: '70%'}} className="map">
 
 
               <Card.Img 
-              
-              src={`https://maps.locationiq.com/v3/staticmap?key=pk.a0564b3cd5bfb3e88f0a9cc3ccabd717&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=10`} 
+              src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_ACCESS_TOKEN}&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=10`} 
               alt ='map'/>
-
-
-
+              <Card.Body>
+                <h1>{`Map of ${this.state.cityData.display_name}`} </h1>
+                <p>{this.state.cityData.lat}</p>
+                <p>{this.state.cityData.lon}</p>
+              </Card.Body>
+              <Card.Footer>
+                <p>LocationIQ API</p>
+              </Card.Footer>
 
             </Card>
         
