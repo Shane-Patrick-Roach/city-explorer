@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+import Card from 'react-bootstrap/Card';
 
-import { render } from '@testing-library/react';
+
 
 
 class App extends React.Component {
@@ -10,17 +11,12 @@ class App extends React.Component {
     this.state = {
       searchQuery: '',
       cityData: {},
-      showCityInfo: false
+      showCityInfo: false,
+      errorMessage: '',
+      renderError: false,
+
     }
   }
-
-
-
-
-
-
-
-
 
   handleChange = e => {
     console.log('button was clicked');
@@ -32,13 +28,9 @@ class App extends React.Component {
 
   }
 
-
-
-
-
   getCityInfo = async (e) => {
     e.preventDefault();
-    let url = `https://us1.locationiq.com/v1/search.php?key=pk.a0564b3cd5bfb3e88f0a9cc3ccabd717&q=${this.state.searchQuery}&format=json`;
+    try {let url = `https://us1.locationiq.com/v1/search.php?key=pk.a0564b3cd5bfb3e88f0a9cc3ccabd717&q=${this.state.searchQuery}&format=json`;
 
     //console.log(url);
 
@@ -48,18 +40,15 @@ class App extends React.Component {
     this.setState({
       cityData: cityResults.data[0],
       showCityInfo: true
-    })
+    })} catch(error){
+      this.setState({
+        renderError: true,
+        errorMessage: `Error Occured: ${error.response.status}, ${error.response.data.error}`
+      })
+    }
 
   }
   
-
-  
-
-
-
-
-
-
 
 
   render() {
@@ -85,8 +74,28 @@ class App extends React.Component {
             <p>{this.state.cityData.display_name}</p>
             <p>{this.state.cityData.lat}</p>
             <p>{this.state.cityData.lon}</p>
-            <img src={`https://maps.locationiq.com/v3/staticmap?key=pk.a0564b3cd5bfb3e88f0a9cc3ccabd717&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=10`} />
+            {this.state.renderError && <p>{this.state.errorMessage}</p>}
+            
+            <Card border="dark" style={{width: '70%'}} className="map">
+
+
+              <Card.Img 
+              
+              src={`https://maps.locationiq.com/v3/staticmap?key=pk.a0564b3cd5bfb3e88f0a9cc3ccabd717&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=10`} 
+              alt ='map'/>
+
+
+
+
+            </Card>
+        
           </article>}
+
+          
+          
+
+
+
         </main>
 
 
