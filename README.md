@@ -6,6 +6,15 @@
 ## Overview
 
 
+
+### When using the app.
+
+1. Clone down repo.
+2. Place each access key into the .env. 
+
+
+
+
 ## Getting Started
 
 
