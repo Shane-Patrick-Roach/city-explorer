@@ -14,6 +14,7 @@ class App extends React.Component {
       showCityInfo: false,
       errorMessage: '',
       renderError: false,
+      weatherData: []
 
     }
   }
@@ -25,9 +26,13 @@ class App extends React.Component {
     });
   }
 
+
+
+
   getCityInfo = async (e) => {
     e.preventDefault();
     try {let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_ACCESS_TOKEN}&q=${this.state.searchQuery}&format=json`;
+
 
     let cityResults = await axios.get(url);
 
@@ -43,6 +48,23 @@ class App extends React.Component {
 
   }
   
+  getWeatherInfo = async e => {
+    e.preventDefault();
+
+    //route to hit //http://localhost:3002/weather?searchQuery=Seattle
+    //let url = `${process.env.REACT_APP_SERVER_URL}/weather?searchQuery=${this.state.searchQuery}`
+    let url = 'http://localhost:3002/weather?searchQuery=Amman';
+
+    let weatherResults = await axios.get(url);
+
+    console.log(weatherResults.data);
+
+    this.setState({
+      weatherData: weatherResults
+    })
+    
+  }
+
 
 
   render() {
@@ -85,6 +107,12 @@ class App extends React.Component {
             </Card>
         
           </article>}
+          <article>
+            <button onClick={this.getWeatherInfo}></button>
+            <p>{this.weatherData}</p>
+
+          </article>
+
 
           
           
