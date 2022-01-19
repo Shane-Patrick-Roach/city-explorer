@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Card from 'react-bootstrap/Card';
+import { ListGroup } from 'react-bootstrap';
 
 
 
@@ -14,7 +15,8 @@ class App extends React.Component {
       showCityInfo: false,
       errorMessage: '',
       renderError: false,
-      weatherData: []
+      weatherData: [],
+      showWeatherData: false
 
     }
   }
@@ -53,14 +55,15 @@ class App extends React.Component {
 
     //route to hit //http://localhost:3002/weather?searchQuery=Seattle
     //let url = `${process.env.REACT_APP_SERVER_URL}/weather?searchQuery=${this.state.searchQuery}`
-    let url = 'http://localhost:3002/weather?searchQuery=Amman';
+    let url = `${process.env.REACT_APP_SERVER_URL}/weather?searchQuery=${this.state.searchQuery}`;
 
     let weatherResults = await axios.get(url);
 
     console.log(weatherResults.data);
 
     this.setState({
-      weatherData: weatherResults
+      weatherData: weatherResults.data,
+      showWeatherData: true
     })
     
   }
@@ -68,6 +71,13 @@ class App extends React.Component {
 
 
   render() {
+
+    let weatherToRender = this.state.weatherData.map((day, idx) => 
+      <ListGroup.Item key={idx}>
+        Date: {day.date}, High: {day.maxTemp}, Low: {day.lowTemp}, {day.description}
+      </ListGroup.Item>
+    
+    )
 
     return (
       <>
@@ -108,8 +118,14 @@ class App extends React.Component {
         
           </article>}
           <article>
-            <button onClick={this.getWeatherInfo}></button>
-            <p>{this.weatherData}</p>
+            <button onClick={this.getWeatherInfo}>Show Weather</button>
+            {
+            this.state.showWeatherData && 
+              <ListGroup>
+                {weatherToRender}
+              </ListGroup>
+            
+            }
 
           </article>
 
