@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import Card from 'react-bootstrap/Card';
-import { ListGroup, ListGroupItem } from 'react-bootstrap';
+
+import { ListGroup } from 'react-bootstrap';
 
 
 
