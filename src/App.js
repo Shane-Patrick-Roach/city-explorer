@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Card from 'react-bootstrap/Card';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
 
 
 
@@ -14,7 +15,10 @@ class App extends React.Component {
       showCityInfo: false,
       errorMessage: '',
       renderError: false,
-      weatherData: []
+      weatherData: [],
+      showWeatherData: false,
+      movieData: [],
+      showMovieData: false
 
     }
   }
@@ -51,23 +55,70 @@ class App extends React.Component {
   getWeatherInfo = async e => {
     e.preventDefault();
 
+    //console.log(this.state.lon)
     //route to hit //http://localhost:3002/weather?searchQuery=Seattle
     //let url = `${process.env.REACT_APP_SERVER_URL}/weather?searchQuery=${this.state.searchQuery}`
-    let url = 'http://localhost:3002/weather?searchQuery=Amman';
+    let url = `${process.env.REACT_APP_SERVER_URL}/weather?lat=${Math.round(this.state.cityData.lat)}&lon=${Math.round(this.state.cityData.lon)}`;
 
     let weatherResults = await axios.get(url);
 
     console.log(weatherResults.data);
 
     this.setState({
-      weatherData: weatherResults
+      weatherData: weatherResults.data,
+      showWeatherData: true
     })
     
   }
 
+  getMoviesInfo = async e => {
+    e.preventDefault();
+
+    // route to hit --- http://localhost:3002/movies?&query=Seattle
+
+    let url = `${process.env.REACT_APP_SERVER_URL}/movies?&query=${this.state.searchQuery}`;
+
+    let movieResults = await axios.get(url);
+
+    console.log(movieResults.data);
+
+    this.setState({
+      movieData: movieResults.data,
+      showMovieData: true
+
+    })
+
+
+  }
+
+
+
+
+
 
 
   render() {
+
+    let weatherToRender = this.state.weatherData.map((day, idx) => 
+      <ListGroup.Item key={idx}>
+        Date: {day.date}, High: {day.maxTemp}, Low: {day.lowTemp},{day.description}
+      </ListGroup.Item>
+    )
+
+    let moviesToRender = this.state.movieData.map((movie, idx) =>
+      <ListGroup.Item key={idx}>
+        <Card>
+          <Card.Img
+            src ={movie.image_url}
+            alt ={movie.overview}>
+          </Card.Img>
+
+        </Card>
+      </ListGroup.Item>
+    
+    )
+
+
 
     return (
       <>
@@ -108,11 +159,26 @@ class App extends React.Component {
         
           </article>}
           <article>
-            <button onClick={this.getWeatherInfo}></button>
-            <p>{this.weatherData}</p>
+            <button onClick={this.getWeatherInfo}>Show Weather</button>
+            {
+            this.state.showWeatherData && 
+              <ListGroup>
+                {weatherToRender}
+              </ListGroup>
+            
+            }
 
           </article>
+          <article>
+            <button onClick={this.getMoviesInfo}>Show Movies</button>
+            {
+            this.state.showMovieData && 
+              <ListGroup>
+                {moviesToRender}
+              </ListGroup>
 
+            }
+          </article>
 
           
           
