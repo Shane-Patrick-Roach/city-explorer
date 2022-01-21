@@ -37,5 +37,21 @@
   }
 }
 
+main {
+  background-color: aquamarine;
+}
 
+header{
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 1vw;
+}
 
+#map {
+  margin: 3vw;
+}
+
+form {
+  margin: 3vw;
+  padding:3vw;
+}
