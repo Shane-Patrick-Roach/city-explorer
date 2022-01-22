@@ -5,6 +5,7 @@ import Weather from './Weather.js';
 import Movies from './Movies.js';
 
 import './App.css';
+import { Container } from 'react-bootstrap';
 
 
 class App extends React.Component {
@@ -112,24 +113,20 @@ class App extends React.Component {
           {this.state.renderError && <p>{this.state.errorMessage}</p>}
 
           {this.state.showCityInfo && <article id='map'>
-            
-            <Card border="dark" style={{width: '50%'}} className="map">
+          <Container>
 
-
+            <Card border="dark" style={{width: '70%'}} className="map">
               <Card.Img 
               src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_ACCESS_TOKEN}&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=10`} 
               alt ='map'/>
               <Card.Body>
-                <h1>{`Map of ${this.state.cityData.display_name}`} </h1>
-                <p>{this.state.cityData.lat}</p>
-                <p>{this.state.cityData.lon}</p>
-              </Card.Body>
-              <Card.Footer>
-                <p>LocationIQ API</p>
-              </Card.Footer>
+                <h2>{`Map of ${this.state.cityData.display_name}`} </h2>
 
+              </Card.Body>
             </Card>
-        
+
+          </Container>
+          <article class = 'infobuttons'>
           <Weather
             weatherData={this.state.weatherData}
             showWeatherData={this.state.showWeatherData}
@@ -140,9 +137,12 @@ class App extends React.Component {
             showMovieData={this.state.showMovieData}
             getMovieInfo={this.getMovieInfo}
           />
+
+          </article>
           </article>}
 
         </main>
+      
       </>
     );
   }
