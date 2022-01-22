@@ -38,13 +38,16 @@
 }
 
 main {
-  background-color: aquamarine;
+  background-color: #7fffd4;
+  align-content: center;
 }
 
 header{
   text-align: center;
   font-weight: bold;
-  letter-spacing: 1vw;
+  letter-spacing: 1.5vw;
+  background-color: rgb(233, 213, 186);
+  padding: 2vw;
 }
 
 #map {
@@ -52,6 +55,12 @@ header{
 }
 
 form {
-  margin: 3vw;
-  padding:3vw;
+  padding: 3vw;
 }
+
+.infobuttons {
+  display: flex;
+  padding: 1vw;
+}
+
+

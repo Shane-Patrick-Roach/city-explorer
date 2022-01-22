@@ -1,5 +1,5 @@
 import React from "react";
-
+import WeatherDay from "./WeatherDay";
 
 import { ListGroup } from "react-bootstrap";
 
@@ -10,9 +10,7 @@ class weather extends React.Component {
   render() {
 
     let weatherToRender = this.props.weatherData.map((day, idx) => 
-    <ListGroup.Item key={idx}>
-      Date: {day.date}, High: {day.maxTemp}, Low: {day.lowTemp},{day.description}
-    </ListGroup.Item>
+    <WeatherDay key={idx} day={day} />
   )
 
     return (
