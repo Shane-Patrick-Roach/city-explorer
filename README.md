@@ -33,6 +33,7 @@
 ![Lab 7 WRRC!](/images/lab7.png "Lab 7 WRRC")
 ![Lab 8 WRRC!](/images/lab8.png "Lab 7 WRRC")
 ![Lab 9 WRRC!](/images/lab9.png "Lab 7 WRRC")
+![Lab 10 WRRC!](/images/lab10.png "Lab 10 WRRC")
 
 
 ### Lab 06

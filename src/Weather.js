@@ -3,9 +3,7 @@ import WeatherDay from "./WeatherDay";
 
 import { ListGroup } from "react-bootstrap";
 
-class weather extends React.Component {
-
-
+class Weather extends React.Component {
 
   render() {
 
@@ -16,17 +14,18 @@ class weather extends React.Component {
     return (
     <article>
       <button onClick={this.props.getWeatherInfo}>Show Weather</button>
+      {this.props.renderError && <p>{this.props.errorMessage}</p>}
+      
       {
       this.props.showWeatherData && 
         <ListGroup>
           {weatherToRender}
         </ListGroup>
       }
-
     </article>
 
     )
   }
 }
 
-export default weather;
+export default Weather;

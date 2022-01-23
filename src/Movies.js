@@ -1,23 +1,15 @@
 import React from "react";
-import { Card } from "react-bootstrap";
-import { ListGroup } from "react-bootstrap";
+import MovieDay from "./MovieDay";
+import { Row } from 'react-bootstrap';
 
-class movies extends React.Component {
+class Movies extends React.Component {
 
 
   render() {
     
     
     let moviesToRender = this.props.movieData.map((movie, idx) =>
-    <ListGroup.Item key={idx}>
-      <Card border="dark" style={{width: '25%'}}>
-        <Card.Img
-          src ={movie.image_url}
-          alt ={movie.overview}>
-        </Card.Img>
-
-      </Card>
-    </ListGroup.Item>
+    <MovieDay key={idx} movie={movie} />
   
   )
 
@@ -27,9 +19,9 @@ class movies extends React.Component {
         <button onClick={this.props.getMovieInfo}>Show Movies</button>
         {
           this.props.showMovieData &&
-          <ListGroup>
-            {moviesToRender}
-          </ListGroup>
+          <Row xs={1} sm={2} md={3} lg={4} >
+          {moviesToRender}
+        </Row>
 
         }
       </article>
@@ -37,4 +29,4 @@ class movies extends React.Component {
   }
 }
 
-export default movies;
+export default Movies;
