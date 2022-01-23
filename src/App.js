@@ -126,19 +126,20 @@ class App extends React.Component {
             </Card>
 
           </Container>
-          <article class = 'infobuttons'>
+          
           <Weather
             weatherData={this.state.weatherData}
             showWeatherData={this.state.showWeatherData}
             getWeatherInfo={this.getWeatherInfo}
+            renderError={this.state.renderError}
+            errorMessage={this.state.errorMessage}
+
           />
           <Movies
             movieData={this.state.movieData}
             showMovieData={this.state.showMovieData}
             getMovieInfo={this.getMovieInfo}
           />
-
-          </article>
           </article>}
 
         </main>
