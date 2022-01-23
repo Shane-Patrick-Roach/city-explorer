@@ -20,7 +20,7 @@ class App extends React.Component {
       weatherData: [],
       showWeatherData: false,
       movieData: [],
-      showMovieData: false
+      showMovieData: false,
 
     }
   }
@@ -30,6 +30,7 @@ class App extends React.Component {
     this.setState({
       searchQuery: click.target.value,
     });
+    
   }
 
 
@@ -50,11 +51,11 @@ class App extends React.Component {
         errorMessage: `Error Occured: ${error.response.status}, ${error.response.data.error}`
       })
     }
-
+    //this.getWeatherInfo();
+    //this.getMovieInfo();
   }
   
-  getWeatherInfo = async e => {
-    e.preventDefault();
+  getWeatherInfo = async () => {
 
     try {let url = `${process.env.REACT_APP_SERVER_URL}/weather?lat=${Math.round(this.state.cityData.lat)}&lon=${Math.round(this.state.cityData.lon)}`;
 
@@ -67,13 +68,12 @@ class App extends React.Component {
     })}catch(error){
       this.setState({
         renderError: true,
-        errorMessage: `Error Occured: ${error.response.status}, ${error.response.data.error}`
+        errorMessage: `Error Occured with accessing weather API`
       })
     }
   }
 
-  getMovieInfo = async e => {
-    e.preventDefault();
+  getMovieInfo = async () => {
 
     try{let url = `${process.env.REACT_APP_SERVER_URL}/movies?&location=${this.state.searchQuery}`;
 
@@ -86,7 +86,7 @@ class App extends React.Component {
     })}catch(error){
       this.setState({
         renderError: true,
-        errorMessage: `Error Occured: ${error.response.status}, ${error.response.data.error}`
+        errorMessage: `Error Occured with accessing movie API`
       })
     }
   }
